@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Go
         uses: actions/setup-go@v5
@@ -28,3 +30,28 @@ jobs:
 
       - name: Run tests
         run: make test
+  
+  tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: ${{ github.event_name == 'push' }}
+    needs: [tests]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - id: token-up
+        name: Get GH App Token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.JIRA_CLI_ACTIONS_APP_ID }}
+          private-key: ${{ secrets.JIRA_CLI_ACTIONS_PRIVATE_KEY }}
+      
+      - name: Bump tag
+        uses: anothrNick/github-tag-action@f278d49d30cdd8775cc3e7dd00b5ee11686ee297 #v1.71.0
+        env:
+          GITHUB_TOKEN: ${{ steps.token-up.outputs.token }}
+          WITH_V: true
