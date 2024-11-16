@@ -30,6 +30,10 @@ jobs:
         with:
           app-id: ${{ vars.JIRA_CLI_ACTIONS_APP_ID }}
           private-key: ${{ secrets.JIRA_CLI_ACTIONS_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            jira-cli
+            homebrew-jira-cli
       
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
