@@ -100,7 +100,7 @@ brews:
 
     # This will prevent goreleaser to actually try to commit the updated
     # formula - leaving the responsibility of publishing it to the user.
-    skip_upload: true
+    skip_upload: false
 
 changelog:
   skip: true
