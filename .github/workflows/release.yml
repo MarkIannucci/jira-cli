@@ -23,8 +23,14 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: stable
-      # More assembly might be required: Docker logins, GPG, etc.
-      # It all depends on your needs.
+      
+      - id: token-up
+        name: Get GH App Token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.JIRA_CLI_ACTIONS_APP_ID }}
+          private-key: ${{ secrets.JIRA_CLI_ACTIONS_PRIVATE_KEY }}
+      
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
@@ -34,6 +40,6 @@ jobs:
           version: "~> v1"
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.token-up.outputs.token }}
           # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution
           # GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
