@@ -60,7 +60,7 @@ checksum:
 
 brews:
   - name: jira-cli
-    homepage: "https://github.com/ankitpokhrel/jira-cli"
+    homepage: "https://github.com/markiannucci/jira-cli"
     description: "🔥 Feature-rich interactive Jira command-line"
     license: "MIT"
 
@@ -68,12 +68,12 @@ brews:
       - nix
 
     repository:
-      owner: ankitpokhrel
+      owner: markiannucci
       name: homebrew-jira-cli
 
     custom_block: |
       head do
-        url "https://github.com/ankitpokhrel/jira-cli.git", branch: "main"
+        url "https://github.com/markiannucci/jira-cli.git", branch: "main"
         depends_on "go"
       end
 
@@ -90,8 +90,8 @@ brews:
       assert_includes help_text, "Version=\"#{version}\""
 
     commit_author:
-      name: ankitpokhrel
-      email: oss@ankit.pl
+      name: markiannucci
+      email: mark.iannucci@gmail.com
 
     commit_msg_template: "Formula update for version {{ .Tag }}"
 
